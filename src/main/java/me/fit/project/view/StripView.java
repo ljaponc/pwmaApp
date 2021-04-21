@@ -2,7 +2,6 @@ package me.fit.project.view;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,28 +19,28 @@ import me.fit.project.service.api.StripService;
 public class StripView implements Serializable {
 
 	private static final long serialVersionUID = 5L;
-	
+
 	@Inject
 	private FacesContext facesContext;
-	
+
 	@Inject
 	private StripService stripService;
-	
+
 	private Strip strip;
-	
+
 	private List<Strip> stripovi;
-	
+
 	private Strip selectedStrip;
-	
+
 	private Korisnik korisnik;
-	
+
 	@PostConstruct
 	public void initNewStrip() {
 		strip = new Strip();
 		stripovi = stripService.getAllStripovi();
 		korisnik = new Korisnik();
 	}
-	
+
 	public void addNewStrip() throws Exception {
 		try {
 			System.out.println(strip.getNaziv());
@@ -55,7 +54,7 @@ public class StripView implements Serializable {
 			facesContext.addMessage(null, m);
 		}
 	}
-	
+
 	public void dodajKorisnika(Korisnik korisnik) {
 		try {
 			selectedStrip.getKorisnici().add(korisnik);
@@ -66,12 +65,8 @@ public class StripView implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
-	
-	
 
 	public Strip getStrip() {
 		return strip;
@@ -104,8 +99,5 @@ public class StripView implements Serializable {
 	public void setKorisnik(Korisnik korisnik) {
 		this.korisnik = korisnik;
 	}
-	
-	
-	
-	
+
 }

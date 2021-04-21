@@ -19,7 +19,6 @@ import me.fit.project.model.Igrica;
 import me.fit.project.model.Korisnik;
 import me.fit.project.model.Strip;
 import me.fit.project.service.api.KorisnikService;
-import me.fit.project.service.impl.KorisnikServiceImpl;
 
 @Named
 @ViewScoped

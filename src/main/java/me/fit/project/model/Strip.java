@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -94,15 +93,6 @@ public class Strip implements Serializable{
 		this.brStrana = brStrana;
 	}
 
-//	public boolean isTvrdiPovez() {
-//		return tvrdiPovez;
-//	}
-//
-//	public void setTvrdiPovez(boolean tvrdiPovez) {
-//		this.tvrdiPovez = tvrdiPovez;
-//	}
-	
-	
 
 	@Override
 	public String toString() {

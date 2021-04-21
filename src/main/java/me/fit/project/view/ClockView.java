@@ -11,7 +11,11 @@ import javax.inject.Named;
 @ViewScoped
 public class ClockView implements Serializable {
 
-    private LocalDateTime dateTime;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private LocalDateTime dateTime;
 
 
     @PostConstruct
