@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<ui:define name="content">
+		
+		<h1>Dodajte Igricu</h1>
+
+		<h:form id="reg1" style="border:none">
+
+
+
+			<p:dataTable id="korisniciTableId" var="s"
+				value="#{korisnikView.korisnici}">
+				<p:column headerText="Ime" filterBy="#{s.name}"
+					filterMatchMode="contains">
+					<h:outputText value="#{s.name}" />
+				</p:column>
+
+				<p:column headerText="Email" filterBy="#{s.email}"
+					filterMatchMode="contains">
+					<h:outputText value="#{s.email}" />
+				</p:column>
+
+				<p:column headerText="Igrica">
+					<ui:repeat var="igrica" value="#{s.igrice}">
+						<h:outputText value="#{igrica.naziv}" />
+						<br />
+					</ui:repeat>
+				</p:column>
+
+				<p:column headerText="Dodaj Igricu">
+					<p:commandButton value="+"
+						oncomplete="PF('addIgricaDialog').show()" process="@this">
+						<f:setPropertyActionListener value="#{s}"
+							target="#{korisnikView.selectedKorisnik}" />
+					</p:commandButton>
+				</p:column>
+
+
+			</p:dataTable>
+
+			<p:dialog id="addIgrica" header="Dodavanje Igrice"
+				widgetVar="addIgricaDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<p:outputPanel id="addIgricaId" style="text-align:center;">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Naziv Igrice" />
+						<p:inputText value="#{korisnikView.igrica.naziv}" required="true"
+							requiredMessage="Igrica je obavezna" />
+						<p:commandButton value="Sačuvaj"
+							oncomplete="PF('addIgricaDialog').hide()"
+							process="@this addIgrica"
+							actionListener="#{korisnikView.dodajIgricu()}"
+							update="korisniciTableId" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+			
+			<br/>
+			<br/>
+			
+			
+		</h:form>
+				
+	</ui:define>
+
+</ui:composition>

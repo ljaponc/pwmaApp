@@ -14,55 +14,57 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import me.fit.project.model.Student;
-import me.fit.project.service.api.StudentService;
-import me.fit.project.service.impl.StudentServiceImpl;
+import me.fit.project.model.Strip;
 
-@Path("/students")
+
+import me.fit.project.service.api.StripService;
+
+@Path("/stripovi")
 @RequestScoped
-public class StudentRestService {
+public class StripRestService {
 
 	@Inject
 	private Logger log;
 
 	@Inject
-	private StudentService studentService;
-
+	private StripService stripService;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getAll")
-	public Response getAllStudents() {
-		List<Student> students = studentService.getAllStudents();
+	public Response getAllStripovi() {
+		
+		List<Strip> stripovi = stripService.getAllStripovi();
 
-		return Response.ok(students).build();
+		return Response.ok(stripovi).build();
 
 	}
-
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/addStudent")
-	public void getAllStudents(Student s) {
+	@Path("/addStrip")
+	public void getAllStripovi(Strip s) {
 		try {
-			studentService.addStudent(s);
+			stripService.addStrip(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/findStudent")
-	public Response findStudentByName(@QueryParam("name") String ime) {
+	@Path("/findStrip")
+	public Response findStripByName(@QueryParam("naziv") String ime) {
 		try {
-			List<Student> students = studentService.getByName(ime);
+			List<Strip> stripovi = stripService.getByName(ime);
 
-			return Response.ok(students).build();
+			return Response.ok(stripovi).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 		return null;
 	}
-
+	
 }

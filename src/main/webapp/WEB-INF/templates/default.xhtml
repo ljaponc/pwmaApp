@@ -1,32 +1,105 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
 <h:head>
 	<title>project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<h:outputStylesheet name="css/screen.css" />
 </h:head>
 <h:body>
+
 	<div id="container">
-		<div class="dualbrand">LOGO</div>
-		<h:form>
-			<p:messages id="messages" showDetail="true" closable="true">
-				<p:autoUpdate />
-			</p:messages>
-		</h:form>
+		<div class="dualbrand" style="border: none">
+
+			<h:form style="border:none">
+				<p:messages id="messages" showDetail="true" closable="true">
+					<p:autoUpdate />
+				</p:messages>
+			</h:form>
+
+
+
+			<div id="sat">
+
+				<h:form id="sat" style="border:none">
+
+					<p:clock displayMode="analog" style="position:center" />
+
+					<h2>Stripovi dostupni u stripoteci</h2>
+
+					<p:dataTable id="StripoviTableId" var="t"
+						value="#{stripView.stripovi}">
+						<p:column headerText="Ime">
+							<h:outputText value="#{t.naziv}" />
+						</p:column>
+
+						<p:column headerText="Zanr">
+							<h:outputText value="#{t.zanr}" />
+						</p:column>
+
+						<p:column headerText="Autor">
+							<h:outputText value="#{t.autor}" />
+						</p:column>
+
+						<p:column headerText="Broj Strana">
+							<h:outputText value="#{t.brStrana}" />
+						</p:column>
+
+
+
+					</p:dataTable>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+
 		<div id="content">
 			<ui:insert name="content">
 
 			</ui:insert>
 		</div>
-		<div id="aside">
-			<p>Linkovi sa strane</p>
-		</div>
+
+		<h:form id="stack" style="border:none">
+			<p:stack icon="stack.png" expanded="true">
+
+				<p:menuitem value="Filmovi" outcome="index" icon="video-camera.png">
+					<p:button value="Idi na film" icon="pi pi-bookmark"
+						styleClass="rounded-button ui-button-secondary" outcome="index" />
+				</p:menuitem>
+
+				<p:menuitem value="Igrice" outcome="dodavanjeIgrice"
+					icon="joystic.png">
+					<p:button value="Dodaj Igricu" icon="pi pi-bookmark"
+						styleClass="rounded-button ui-button-secondary"
+						outcome="dodavanjeIgrice" />
+				</p:menuitem>
+
+				<p:menuitem value="Stripovi" outcome="stripovi" icon="read.png">
+					<p:button value="Idite na Stripove" icon="pi pi-bookmark"
+						styleClass="rounded-button ui-button-secondary" outcome="stripovi" />
+				</p:menuitem>
+
+			</p:stack>
+		</h:form>
+
 		<div id="footer">
 			<p>
-				Footer<br />
+				Leposavic Milos 33-17<br />
 			</p>
 		</div>
 	</div>
+
+
+
+
 </h:body>
+
+
 </html>

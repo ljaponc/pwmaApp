@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+
+		<h1>Stripoteka</h1>
+
+		<p:growl id="growl" showDetail="true" />
+		<p:commandButton value="Dodajte novi strip"
+			oncomplete="PF('addStripDialog').show()" process="@this">
+		</p:commandButton>
+
+
+		<p:dialog id="addFilm" header="Dodavanje Filma"
+			widgetVar="addStripDialog" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false">
+			<h:form id="strip_add" style="border:none">
+
+				<h:panelGroup id="addStrip">
+
+					<p:outputLabel value="Naziv stripa" />
+					<p:inputText value="#{stripView.strip.naziv}" required="true"
+						requiredMessage="Ime je obavezno!" />
+					<br />
+					<br />
+					<p:outputLabel value="Zanr" />
+					<p:inputText value="#{stripView.strip.zanr}" required="true"
+						requiredMessage="Unesite zanr!" />
+					<br />
+					<br />
+					<p:outputLabel value="Autor" />
+					<p:inputText value="#{stripView.strip.autor}" required="true"
+						requiredMessage="Unesite autora!" />
+					<br />
+					<br />
+					<p:outputLabel value="Broj strana" />
+					<p:inputText value="#{stripView.strip.brStrana}" required="true"
+						requiredMessage="Unesite br Strana!" />
+					<br />
+					<br />
+
+					<p:commandButton value="Sačuvaj"
+						oncomplete="PF('addStripDialog').hide()"
+						actionListener="#{stripView.addNewStrip()}"
+						update="sat, stripovi, addStrip" process="@this addStrip" />
+
+				</h:panelGroup>
+
+			</h:form>
+
+		</p:dialog>
+
+
+		<h:form id="stripovi">
+
+			<p:dataTable id="StripoviTableId" var="t"
+				value="#{stripView.stripovi}">
+
+
+				<p:column headerText="Ime">
+					<h:outputText value="#{t.naziv}" />
+				</p:column>
+
+				<p:column headerText="Korisnik koji iznajmljuje">
+
+					<ui:repeat var="k" value="#{t.korisnici}">
+						<h:outputText value="#{k.name}" />
+						<br />
+					</ui:repeat>
+
+				</p:column>
+
+				<p:column headerText="Dodatje.."> 
+					<p:commandButton value="+"
+						oncomplete="PF('addKorisnikDialog').show()" process="@this">
+						<f:setPropertyActionListener value="#{t}"
+							target="#{stripVieW.selectedStrip}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+
+			<p:dialog id="addKorisnikDialog" header="Ko iznajmljuje?"
+				widgetVar="addKorisnikDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+
+				<h:form style="border:none">
+					<p:dataTable id="korisniciTableId" var="s"
+						value="#{korisnikView.korisnici}" selectionMode="single"
+						selection="#{dtSelectionView.selectedKorisnik}" rowKey="#{s.id}"
+						style="width:700px">
+						
+						<p:ajax event="rowSelect" oncomplete="PF('addKorisnikDialog').hide()" listener="#{t.dodajKorisnika(korisnikView.onRowSelect)}"/>
+
+						<p:column headerText="ID">
+							<h:outputText value="#{s.id}" />
+						</p:column>
+
+						<p:column headerText="Ime">
+							<h:outputText value="#{s.name}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputText value="#{s.email}" />
+						</p:column>
+						
+						
+						
+					</p:dataTable>
+					
+
+				</h:form>
+
+			</p:dialog>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

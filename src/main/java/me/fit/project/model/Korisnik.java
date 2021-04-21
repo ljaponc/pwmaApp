@@ -25,6 +25,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,40 +33,47 @@ import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = Student.GET_ALL, query = "Select s from Student s"),
-		@NamedQuery(name = Student.GET_BY_NAME, query = "Select s from Student s where s.name = :ime") })
+@NamedQueries({ @NamedQuery(name = Korisnik.GET_ALL, query = "Select s from Korisnik s"),
+		@NamedQuery(name = Korisnik.GET_BY_NAME, query = "Select s from Korisnik s where s.name = :ime") })
 @XmlRootElement
-public class Student implements Serializable {
+public class Korisnik implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String GET_ALL = "Student.getAll";
-	public static final String GET_BY_NAME = "Student.getByName";
+	public static final String GET_ALL = "Korisnik.getAll";
+	public static final String GET_BY_NAME = "Korisnik.getByName";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
-	@SequenceGenerator(name = "student_seq", sequenceName = "student_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "korsinik_seq")
+	@SequenceGenerator(name = "korsinik_seq", sequenceName = "korsinik_seq", allocationSize = 1)
 	private Long id;
 
 	private String name;
 
 	private String email;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="student", fetch=FetchType.EAGER)
-	private Set<Phone> phones;
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="korisnik", fetch=FetchType.EAGER)
+	private Set<Film> films;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="student", fetch=FetchType.EAGER)
-	private Set<StudentSubject> studentSubjects;
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="korisnik", fetch=FetchType.EAGER)
+	private Set<Igrica> igrice;
+	
+	@ManyToOne
+	private Strip strip;
+	
 
-	public Student() {
+	public Korisnik() {
 		super();
 	}
 
-	public Student(String name, String email, Set<Phone> phones) {
+	public Korisnik(String name, String email, Set<Film> films, Set<Igrica> igrice, Strip strip) {
 		super();
 		this.name = name;
 		this.email = email;
-		this.phones = phones;
+		this.films = films;
+		this.igrice = igrice;
+		this.strip = strip;
+		
 	}
 
 	public Long getId() {
@@ -92,12 +100,28 @@ public class Student implements Serializable {
 		this.email = email;
 	}
 
-	public Set<Phone> getPhones() {
-		return phones;
+	public Set<Film> getFilms() {
+		return films;
 	}
 
-	public void setPhones(Set<Phone> phones) {
-		this.phones = phones;
+	public void setFilms(Set<Film> films) {
+		this.films = films;
+	}
+	
+	public Set<Igrica> getIgrice() {
+		return igrice;
+	}
+
+	public void setIgrica(Set<Igrica> igrice) {
+		this.igrice = igrice;
+	}
+	
+	public Strip getStrip() {
+		return strip;
+	}
+
+	public void setStrip(Strip strip) {
+		this.strip = strip;
 	}
 
 	@Override
@@ -116,7 +140,7 @@ public class Student implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Student other = (Student) obj;
+		Korisnik other = (Korisnik) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -127,7 +151,7 @@ public class Student implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", email=" + email + ", phones=" + phones + "]";
+		return "Korisnik [id=" + id + ", name=" + name + ", email=" + email + ", films=" + films + "]";
 	}
 
 }

@@ -1,71 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" template="/WEB-INF/templates/default.xhtml" xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
-		<h1>Sample student application</h1>
+		<h1>Filmovi</h1>
 
-		<h:form id="reg">
-			<h2>Students form</h2>
+		<h:form id="reg" style="border:none">
+			<h2>Korisnicka forma</h2>
 
-			<h:panelGroup id="addStudent">
+			<h:panelGroup id="addKorisnik">
 
 				<p:outputLabel value="Ime" />
-				<p:inputText value="#{studentView.student.name}" required="true" requiredMessage="Ime je obavezno" />
+				<p:inputText value="#{korisnikView.korisnik.name}" required="true"
+					requiredMessage="Ime je obavezno" />
 				<br />
 				<br />
 				<p:outputLabel value="Email" />
-				<p:inputText value="#{studentView.student.email}" required="true" requiredMessage="Email je obavezan" />
+				<p:inputText value="#{korisnikView.korisnik.email}" required="true"
+					requiredMessage="Email je obavezan" />
 				<br />
 				<br />
-				<p:commandButton value="Sačuvaj" actionListener="#{studentView.addNewStudent()}" update="reg" process="@this addStudent" />
+				<p:commandButton value="Sačuvaj"
+					actionListener="#{korisnikView.addNewKorisnik()}" update="reg"
+					process="@this addKorisnik" />
+
 				<br />
 				<br />
 
 				<br />
 				<br />
-				<p:outputLabel value="Pretraga studenta po imenu:" />
+				<p:outputLabel value="Pretraga korisnika po imenu:" />
 				<br />
 				<br />
-				<p:inputText value="#{studentView.imeZaPretragu}">
-					<p:ajax event="keyup" update="studentsTableId" process="@this" listener="#{studentView.pretraziPoImenu}" />
+				<p:inputText value="#{korisnikView.imeZaPretragu}">
+					<p:ajax event="keyup" update="korisniciTableId" process="@this"
+						listener="#{korisnikView.pretraziPoImenu}" />
 				</p:inputText>
 				<br />
 				<br />
+			
+			
 			</h:panelGroup>
-			<p:dataTable id="studentsTableId" var="s" value="#{studentView.students}">
-				<p:column headerText="Ime" filterBy="#{s.name}" filterMatchMode="contains">
+			<p:dataTable id="korisniciTableId" var="s"
+				value="#{korisnikView.korisnici}">
+				<p:column headerText="Ime" filterBy="#{s.name}"
+					filterMatchMode="contains">
 					<h:outputText value="#{s.name}" />
 				</p:column>
 
-				<p:column headerText="Email" filterBy="#{s.email}" filterMatchMode="contains">
+				<p:column headerText="Email" filterBy="#{s.email}"
+					filterMatchMode="contains">
 					<h:outputText value="#{s.email}" />
 				</p:column>
 
-				<p:column headerText="Telefon">
-					<ui:repeat var="phone" value="#{s.phones}">
-						<h:outputText value="#{phone.number}" />
-						<br/>
+				<p:column headerText="Film">
+					<ui:repeat var="film" value="#{s.films}">
+						<h:outputText value="#{film.naziv}" />
+						<br />
 					</ui:repeat>
 				</p:column>
 
-				<p:column headerText="Dodaj Telefon">
-					<p:commandButton value="+" oncomplete="PF('addPhoneDialog').show()" process="@this">
-						<f:setPropertyActionListener value="#{s}" target="#{studentView.selectedStudent}" />
+				<p:column headerText="Dodaj Film">
+					<p:commandButton value="+" oncomplete="PF('addFilmDialog').show()"
+						process="@this">
+						<f:setPropertyActionListener value="#{s}"
+							target="#{korisnikView.selectedKorisnik}" />
 					</p:commandButton>
 				</p:column>
 
 
 			</p:dataTable>
 
-			<p:dialog id="addPhone" header="Car Info" widgetVar="addPhoneDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-				<p:outputPanel id="addPhoneId" style="text-align:center;">
+			<p:dialog id="addFilm" header="Dodavanje Filma"
+				widgetVar="addFilmDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<p:outputPanel id="addFilmId" style="text-align:center;">
 					<p:panelGrid columns="2">
-						<p:outputLabel value="Broj telefona" />
-						<p:inputText value="#{studentView.phone.number}" required="true" requiredMessage="Telefon je obavezan" />
-						<p:commandButton value="Sačuvaj" oncomplete="PF('addPhoneDialog').hide()" process="@this addPhone" actionListener="#{studentView.dodajTelefon()}" update="studentsTableId"/>
+						<p:outputLabel value="Naziv Filma" />
+						<p:inputText value="#{korisnikView.film.naziv}" required="true"
+							requiredMessage="Film je obavezan" />
+						<p:commandButton value="Sačuvaj"
+							oncomplete="PF('addFilmDialog').hide()" process="@this addFilm"
+							actionListener="#{korisnikView.dodajFilm()}"
+							update="korisniciTableId" />
 					</p:panelGrid>
 				</p:outputPanel>
 			</p:dialog>
+
+			<br />
+			<br />
+
 		</h:form>
+
+
 	</ui:define>
 </ui:composition>
