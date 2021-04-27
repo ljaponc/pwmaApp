@@ -6,16 +6,15 @@
 	template="/WEB-INF/templates/default.xhtml"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
+		<h:outputStylesheet name="primeicons/primeicons.css"
+			library="primefaces" />
 
 		<h1>Stripoteka</h1>
-
-		<p:growl id="growl" showDetail="true" />
-		<p:commandButton value="Dodajte novi strip"
+		<h:form style="border:none"><p:commandButton value="Dodajte novi strip"
 			oncomplete="PF('addStripDialog').show()" process="@this">
-		</p:commandButton>
+		</p:commandButton></h:form>
 
-
-		<p:dialog id="addFilm" header="Dodavanje Filma"
+		<p:dialog id="addFilm" header="Dodavanje Stripa"
 			widgetVar="addStripDialog" modal="true" showEffect="fade"
 			hideEffect="fade" resizable="false">
 			<h:form id="strip_add" style="border:none">
@@ -25,21 +24,25 @@
 					<p:outputLabel value="Naziv stripa" />
 					<p:inputText value="#{stripView.strip.naziv}" required="true"
 						requiredMessage="Ime je obavezno!" />
+					<i class="pi pi-pencil" style="font-size: 2em"></i>
 					<br />
 					<br />
 					<p:outputLabel value="Zanr" />
 					<p:inputText value="#{stripView.strip.zanr}" required="true"
 						requiredMessage="Unesite zanr!" />
+					<i class="pi pi-pencil" style="font-size: 2em"></i>
 					<br />
 					<br />
 					<p:outputLabel value="Autor" />
 					<p:inputText value="#{stripView.strip.autor}" required="true"
 						requiredMessage="Unesite autora!" />
+					<i class="pi pi-pencil" style="font-size: 2em"></i>
 					<br />
 					<br />
 					<p:outputLabel value="Broj strana" />
 					<p:inputText value="#{stripView.strip.brStrana}" required="true"
 						requiredMessage="Unesite br Strana!" />
+					<i class="pi pi-pencil" style="font-size: 2em"></i>
 					<br />
 					<br />
 
@@ -74,27 +77,32 @@
 
 				</p:column>
 
-				<p:column headerText="Dodatje.."> 
+				<p:column headerText="Dodatje..">
 					<p:commandButton value="+"
 						oncomplete="PF('addKorisnikDialog').show()" process="@this">
 						<f:setPropertyActionListener value="#{t}"
-							target="#{stripVieW.selectedStrip}" />
+							target="#{stripView.selectedStrip}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
 
-			<p:dialog id="addKorisnikDialog" header="Ko iznajmljuje?"
+
+			<p:dialog id="addKorisnikDialogg" header="Ko iznajmljuje?"
 				widgetVar="addKorisnikDialog" modal="true" showEffect="fade"
 				hideEffect="fade" resizable="false">
 
 				<h:form style="border:none">
 					<p:dataTable id="korisniciTableId" var="s"
 						value="#{korisnikView.korisnici}" selectionMode="single"
-						selection="#{dtSelectionView.selectedKorisnik}" rowKey="#{s.id}"
+						selection="#{korisnikView.selectedKorisnik}" rowKey="#{s.id}"
 						style="width:700px">
-						
-						<p:ajax event="rowSelect" oncomplete="PF('addKorisnikDialog').hide()" listener="#{t.dodajKorisnika(korisnikView.onRowSelect)}"/>
+
+						<p:ajax event="rowSelect"
+							oncomplete="#{stripView.dodajKorisnika()}; PF('addKorisnikDialog').hide()"
+							listener="#{stripView.dodajKorisnika()}" 
+							update="stripovi"
+							/>
 
 						<p:column headerText="ID">
 							<h:outputText value="#{s.id}" />
@@ -107,11 +115,11 @@
 						<p:column headerText="Email">
 							<h:outputText value="#{s.email}" />
 						</p:column>
-						
-						
-						
+
+
+
 					</p:dataTable>
-					
+
 
 				</h:form>
 
