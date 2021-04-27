@@ -6,6 +6,7 @@
 	template="/WEB-INF/templates/default.xhtml"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 		<h1>Filmovi</h1>
 
 		<h:form id="reg" style="border:none">
@@ -13,14 +14,14 @@
 
 			<h:panelGroup id="addKorisnik">
 
-				<p:outputLabel value="Ime" />
-				<p:inputText value="#{korisnikView.korisnik.name}" required="true"
-					requiredMessage="Ime je obavezno" />
+				<p:outputLabel value="Ime" style="font-size: 2em"/>
+				<p:inputText label="Ime" value="#{korisnikView.korisnik.name}" required="true"
+					requiredMessage="Ime je obavezno" /><span class="pi pi-user" style="font-size: 3em"></span>
 				<br />
 				<br />
-				<p:outputLabel value="Email" />
+				<p:outputLabel value="Email" style="font-size: 2em"/>
 				<p:inputText value="#{korisnikView.korisnik.email}" required="true"
-					requiredMessage="Email je obavezan" />
+					requiredMessage="Email je obavezan"/><i class="pi pi-inbox" style="font-size: 3em"></i>
 				<br />
 				<br />
 				<p:commandButton value="Sačuvaj"
