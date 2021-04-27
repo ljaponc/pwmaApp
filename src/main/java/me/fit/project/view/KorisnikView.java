@@ -60,14 +60,15 @@ public class KorisnikView implements Serializable {
 	public void addNewKorisnik() throws Exception {
 		try {
 			System.out.println(korisnik.getName());
+			String name = korisnik.getName();
 			korisnikService.addKorisnik(korisnik);
 			korisnik = new Korisnik();
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
-			facesContext.addMessage(null, m);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered! #{name}", "Registration successful");
+			facesContext.addMessage("messages", m);
 			korisniks = korisnikService.getAllKorisnici();
 		} catch (Exception e) {
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Not registered", "Registration unsuccessful");
-			facesContext.addMessage(null, m);
+			facesContext.addMessage("messages", m);
 		}
 	}
 
