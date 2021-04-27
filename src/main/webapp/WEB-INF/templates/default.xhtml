@@ -4,11 +4,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <h:head>
 	<title>project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<h:outputStylesheet name="css/screen.css" />
+	
 </h:head>
 <h:body>
 
@@ -16,9 +17,7 @@
 		<div class="dualbrand" style="border: none">
 
 			<h:form style="border:none">
-				<p:messages id="messages" showDetail="true" closable="true">
-					<p:autoUpdate />
-				</p:messages>
+				<p:growl id="messages" showDetail="true" severity="info,warn,error"><p:autoUpdate/></p:growl>
 			</h:form>
 
 
@@ -90,9 +89,7 @@
 		</h:form>
 
 		<div id="footer">
-			<p>
-				Leposavic Milos 33-17<br />
-			</p>
+			<h:outputLink value="http://github.com/ljaponc" target="_blank">Leposavic Milos 33-17</h:outputLink>
 		</div>
 	</div>
 
